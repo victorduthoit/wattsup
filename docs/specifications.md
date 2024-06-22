@@ -1,7 +1,9 @@
 # Functional Specifications
 - **SPEC 1**: The user shall be able to define appliances of the household 
 
-- **SPEC 1.1**: Appliances shall be defined by: name, category and capacity (in W).
+- **SPEC 1.1**: Appliances shall be defined by: name, category and power (in W).
+  
+- **SPEC 1.2**: Applicances' categories shall be limited to the following: "L", "F", "A"
 
 - **SPEC 2**: The user shall be able to give its email
 
@@ -27,5 +29,4 @@
   - the total optimized connsumption
   - the consumption of each appliances in kWh
   - the consumption of each appliances in percent respect to total optimized consumption
-
 
