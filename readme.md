@@ -14,6 +14,18 @@ Small applications to optimise the consumption of appliances of an hhousehold.
 
 ### Usage
 
+Example of data:
+| Appliance       | Category | Power |
+|:---------------:|:--------:|:-----:|
+| Fridge          | F        | 2000  |
+| Freezer         | F        | 2500  |
+| Washing machine | A        | 1500  |
+| Dishwasher      | A        | 2500  |
+| Induction stove | A        | 3000  |
+| TV              | L        |  500  |
+| Small light     | L        |  100  |
+| Big light       | L        |  800  |
+
 ## Project organisation
 
 ## Roadmap
@@ -24,6 +36,7 @@ Small applications to optimise the consumption of appliances of an hhousehold.
   - [x] UX: [use case](./docs/xp-use-case.png)
   - [x] data: [data model](./docs/datamodel.png)
   - [ ] backend endpoints:
+  - [ ] optimisation docs: 
 
 - [ ] development
   - [ ] backend dummy: post email
