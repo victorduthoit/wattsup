@@ -1,19 +1,23 @@
+# Index
 <!-- vscode-markdown-toc -->
-* 1. [2.1. Appliances Management](#AppliancesManagement)
-	* 1.1. [2.1.1. Create Appliance](#CreateAppliance)
-	* 1.2. [2.1.2. 2.1.2 Get Appliance](#GetAppliance)
-	* 1.3. [2.1.3. 2.1.3 Update Appliance](#UpdateAppliance)
-	* 1.4. [2.1.4. 2.1.4 Delete Appliance](#DeleteAppliance)
-	* 1.5. [2.1.5. List Appliances](#ListAppliances)
-* 2. [2.2. household total energy optimisation](#householdtotalenergyoptimisation)
-	* 2.1. [2.2.1. 2.2.1 Get Optimized Consumption](#GetOptimizedConsumption)
+* 1. [Resources](#1-resources)
+* 2. [API Endpoints](#2-api-endpoints)
+  * 2.1. [Appliances Management](#AppliancesManagement)
+    * 2.1.1. [Create Appliance](#CreateAppliance)
+    * 2.1.2. [Get Appliance](#GetAppliance)
+    * 2.1.3. [Update Appliance](#UpdateAppliance)
+    * 2.1.4. [Delete Appliance](#DeleteAppliance)
+    * 2.1.5. [List Appliances](#ListAppliances)
+  * 2.2. [household total energy optimisation](#householdtotalenergyoptimisation)
+    * 2.2.1. [Get Optimized Consumption](#GetOptimizedConsumption)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
-# 1. Resources
+
+## 1. <a name='Resources'></a> Resources
 Main resources that the API manage:
 - Appliance: Represents an individual household appliance with properties:
   - name
@@ -25,15 +29,15 @@ Main resources that the API manage:
   - email
 - Category: Represents groups of appliances with properties:
   - name
-  - possible duration operating
-  - miminum duration operaring
+  - possible_duration_operating
+  - miminum_duration_operaring
 
-# 2. API Endpoints
+## 2. <a name='APIEndPoint'></a> API Endpoints
 Endpoints to handle CRUD operations on resources and computations:
 
-##  1. <a name='AppliancesManagement'></a>2.1. Appliances Management
+###  1. <a name='AppliancesManagement'></a>Appliances Management
 
-###  1.1. <a name='CreateAppliance'></a>2.1.1. Create Appliance
+####  1.1. <a name='CreateAppliance'></a>Create Appliance
 **Endpoint**: `POST /api/v1/appliances`
 **Description**: Adds a new appliance.
 **Request Body**:
@@ -70,7 +74,7 @@ Endpoints to handle CRUD operations on resources and computations:
 }
 ``` 
 
-###  1.2. <a name='GetAppliance'></a>2.1.2. 2.1.2 Get Appliance
+####  1.2. <a name='GetAppliance'></a>Get Appliance
 
 **Endpoint**: `GET /api/v1/appliances/{id}`
 **Description**: Retrieves a specific appliance by ID.
@@ -86,7 +90,7 @@ Endpoints to handle CRUD operations on resources and computations:
 }
 ```
 
-###  1.3. <a name='UpdateAppliance'></a>2.1.3. 2.1.3 Update Appliance
+####  1.3. <a name='UpdateAppliance'></a>Update Appliance
 
 **Endpoint**: `PUT /api/v1/appliances/{id}`
 **Description**: Updates an existing appliance.
@@ -103,7 +107,7 @@ Endpoints to handle CRUD operations on resources and computations:
 ```
 **Response**: Similar to Create Appliance.
 
-###  1.4. <a name='DeleteAppliance'></a>2.1.4. 2.1.4 Delete Appliance
+####  1.4. <a name='DeleteAppliance'></a>Delete Appliance
 
 **Endpoint**: `DELETE /api/v1/appliances/{id}`
 **Description**: Deletes an appliance by ID.
@@ -113,7 +117,7 @@ Endpoints to handle CRUD operations on resources and computations:
     "minimum_total_consumption": 4000
 }
 ```
-###  1.5. <a name='ListAppliances'></a>2.1.5. List Appliances
+####  1.5. <a name='ListAppliances'></a>List Appliances
 
 **Endpoint**: `GET /api/v1/appliances`
 **Description**: Lists all appliances.
@@ -139,9 +143,9 @@ Endpoints to handle CRUD operations on resources and computations:
 ]
 ```
 
-##  2. <a name='householdtotalenergyoptimisation'></a>2.2. household total energy optimisation
+###  2. <a name='householdtotalenergyoptimisation'></a>household total energy optimisation
 
-###  2.1. <a name='GetOptimizedConsumption'></a>2.2.1. 2.2.1 Get Optimized Consumption
+####  2.1. <a name='GetOptimizedConsumption'></a>Get Optimized Consumption
 
 **Endpoint**: `GET /api/v1/households/consumption/optimized/{total_expected_consumption}`
 **Description**: Calculates the optimized consumption for the household.
