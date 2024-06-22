@@ -35,7 +35,7 @@ Example of data:
   - [x] UI: [mockup](./docs/frontend-mockup.png)
   - [x] UX: [use case](./docs/xp-use-case.png)
   - [x] data: [data model](./docs/datamodel.png)
-  - [ ] backend endpoints:
+  - [x] backend endpoints:
   - [ ] optimisation docs: 
 
 - [ ] development
