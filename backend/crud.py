@@ -1,6 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-import models, schemas
+import models
+import schemas
+from sqlalchemy import func
 
 
 def create_appliance(db: Session, appliance: schemas.ApplianceCreate):
@@ -12,34 +14,99 @@ def create_appliance(db: Session, appliance: schemas.ApplianceCreate):
     db.add(db_appliance)
     db.commit()
     db.refresh(db_appliance)
-    return db_appliance
+    # add power to category
+    add_category_power(db=db, category_id=appliance.category, net_power=appliance.power)
+    # determine new minimum energy consumption
+    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
+    response = {
+        "minimum_total_energy": minimum_energy_consumption,
+        "appliance": db_appliance,
+    }
+    return response
 
-def update_appliance(db: Session, appliance_id: int, appliance: schemas.ApplianceCreate):
+def get_appliance(db: Session, appliance_id: int):
     db_appliance = db.query(models.Appliance).filter(models.Appliance.id == appliance_id).first()
     if not db_appliance:
         raise HTTPException(status_code=404, detail="Appliance not found")
+    return db_appliance
+
+def update_appliance(db: Session, appliance_id: int, appliance: schemas.ApplianceCreate):
+
+    db_appliance = get_appliance(db=db, appliance_id=appliance_id)
+    # keep previous category and previous power
+    prev_power = db_appliance.power
+    prev_category = db_appliance.category
+
+    # update appliance
     db_appliance.name = appliance.name
     db_appliance.category = appliance.category
     db_appliance.power = appliance.power
     db.commit()
     db.refresh(db_appliance)
-    return db_appliance
 
-def get_appliance(db: Session, appliance_id: int):
-    db_appliance = db.query(models.Appliance).filter(models.Appliance.id == appliance_id).first()
-    return db_appliance
+    # remove previous power from previous category
+    add_category_power(db=db, category_id=prev_category, net_power=-prev_power)
+    # add new power to new category 
+    add_category_power(db=db, category_id=appliance.category, net_power=appliance.power)
+
+    # determine new minimum energy consumption
+    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
+
+    # prepare response
+    response = {
+        "minimum_total_energy": minimum_energy_consumption,
+        "appliance": db_appliance,
+    }
+    return response
 
 def get_appliances(db: Session):
-    db_appliance = db.query(models.Appliance).all()
-    return db_appliance
+    db_appliances = db.query(models.Appliance).all()
+    return db_appliances
 
 def delete_appliance(db: Session, appliance_id:int):
-    db_appliance = db.query(models.Appliance).filter(models.Appliance.id == appliance_id).first()
-    if not db_appliance:
-        raise HTTPException(status_code=404, detail="Appliance not found")
+    db_appliance = get_appliance(db=db, appliance_id=appliance_id)
+
+    # keep previous category and previous power
+    prev_power = db_appliance.power
+    prev_category = db_appliance.category
+
+    # remove appliance
     db.delete(db_appliance)
     db.commit()
-    return None
 
+    # remove previous power from previous category
+    add_category_power(db=db, category_id=prev_category, net_power=-prev_power)
+
+    # determine new minimum energy consumption
+    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
+
+    # prepare response
+    response = {
+        "minimum_total_energy": minimum_energy_consumption,
+    }
+    return response
+
+def get_category(db: Session, category_id: int):
+    db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not db_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    return db_category 
+
+def get_categories(db: Session):
+    db_categories = db.query(models.Category).all()
+    return db_categories
+
+def add_category_power(db: Session, category_id: int, net_power: float):
+    db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not db_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    db_category.power_appliances += net_power
+    db.commit()
+    db.refresh(db_category)
+
+def get_minimum_energy_consumption(db: Session) -> float:
+    minimum_energy = db.query(func.sum(models.Category.power_appliances * models.Category.minimum_duration)).scalar()
+    return minimum_energy
+    
 def get_optimized_consumption(db: Session, total_expected_consumption: float):
     pass

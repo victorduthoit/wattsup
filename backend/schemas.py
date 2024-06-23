@@ -1,8 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum
 
-VALID_CATEGORY = ["L", "F", "A"]
-
 class CategoryName(str, Enum):
     """
     Names of appliance category
@@ -16,7 +14,7 @@ class ApplianceBase(BaseModel):
     category: CategoryName
     power: float
 
-class ApplianceCreate(ApplianceBase):
+class ApplianceCreate(ApplianceBase): 
     pass
 
 class Appliance(ApplianceBase):
@@ -24,14 +22,26 @@ class Appliance(ApplianceBase):
     duration: float | None
     consumption: float | None
 
-class ApplianceMinEnergyConsumption(BaseModel):
-    appliance: Appliance
-    minimum_total_energy: float
-
 class MinEnergyConsumption(BaseModel):
     minimum_total_energy: float
+
+class ApplianceCreateResponse(MinEnergyConsumption):
+    appliance: Appliance
+
+class ApplianceUpdateResponse(ApplianceCreateResponse):
+    pass
+
+class ApplianceDeleteResponse(MinEnergyConsumption):
+    pass
 
 class OptimizedEnergyConsumption(BaseModel):
     appliances: list[Appliance]
     total_energy_abs: float
     total_energy_rel: float
+
+
+class Category(BaseModel):
+    id: CategoryName
+    possible_duration: list[float]
+    minimum_duration: float
+    power_appliances: float
