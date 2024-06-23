@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "specifications",
-        "readme"
+        "readme",
+        "backend"
     ]
 }

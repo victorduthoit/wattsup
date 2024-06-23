@@ -38,7 +38,7 @@ Endpoints to handle CRUD operations on resources and computations:
 ###  1. <a name='AppliancesManagement'></a>Appliances Management
 
 ####  1.1. <a name='CreateAppliance'></a>Create Appliance
-**Endpoint**: `POST /api/v1/appliances`
+**Endpoint**: `POST /appliances`
 **Description**: Adds a new appliance.
 **Request Body**:
 ```
@@ -76,7 +76,7 @@ Endpoints to handle CRUD operations on resources and computations:
 
 ####  1.2. <a name='GetAppliance'></a>Get Appliance
 
-**Endpoint**: `GET /api/v1/appliances/{id}`
+**Endpoint**: `GET /appliances/{id}`
 **Description**: Retrieves a specific appliance by ID.
 **Response**:
 ```
@@ -92,7 +92,7 @@ Endpoints to handle CRUD operations on resources and computations:
 
 ####  1.3. <a name='UpdateAppliance'></a>Update Appliance
 
-**Endpoint**: `PUT /api/v1/appliances/{id}`
+**Endpoint**: `PUT /appliances/{id}`
 **Description**: Updates an existing appliance.
 **Request Body**:
 ```
@@ -109,7 +109,7 @@ Endpoints to handle CRUD operations on resources and computations:
 
 ####  1.4. <a name='DeleteAppliance'></a>Delete Appliance
 
-**Endpoint**: `DELETE /api/v1/appliances/{id}`
+**Endpoint**: `DELETE /appliances/{id}`
 **Description**: Deletes an appliance by ID.
 **Response**: 204 No Content
 ```
@@ -119,7 +119,7 @@ Endpoints to handle CRUD operations on resources and computations:
 ```
 ####  1.5. <a name='ListAppliances'></a>List Appliances
 
-**Endpoint**: `GET /api/v1/appliances`
+**Endpoint**: `GET /appliances`
 **Description**: Lists all appliances.
 **Response**:
 ```
@@ -147,7 +147,7 @@ Endpoints to handle CRUD operations on resources and computations:
 
 ####  2.1. <a name='GetOptimizedConsumption'></a>Get Optimized Consumption
 
-**Endpoint**: `GET /api/v1/households/consumption/optimized/{total_expected_consumption}`
+**Endpoint**: `GET /optimized/consumption/{total_expected_consumption}`
 **Description**: Calculates the optimized consumption for the household.
 **Response**:
 ```
