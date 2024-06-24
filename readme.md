@@ -39,14 +39,15 @@ Example of data:
   - [x] optimisation docs: [optimisation pipeline](./docs/optimisation-pipeline.png) 
 
 - [ ] development
-  - [ ] backend dummy: post email
-  - [ ] backend
+  - [x] backend poc
+  - [ ] backend mvp
   - [ ] create dummy backend states:
     - [ ] empty
     - [ ] to define total energy
     - [ ] to compute optimisation
     - [ ] to plot
   - [ ] front structure
+  - [ ] front dynamic
   - [ ] front css
 
 - [ ] containerize
