@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WattsUp - Energy Consumption</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WattsUp</h1>
+            <input type="email" id="email" placeholder="Email">
+        </header>
+
+        <section class="input-section">
+            <h2>Appliances</h2>
+            <div class="appliance-form">
+                <select id="appliance-category">
+                    <option value="fridge">Fridge</option>
+                    <option value="freezer">Freezer</option>
+                    <option value="tv">TV</option>
+                    <!-- Add more appliances as needed -->
+                </select>
+                <input type="number" id="appliance-capacity" placeholder="Capacity (W)">
+                <button onclick="addAppliance()">Add</button>
+            </div>
+
+            <div class="appliance-list">
+                <h3>Current Appliances</h3>
+                <ul id="appliance-list"></ul>
+            </div>
+        </section>
+
+        <section class="output-section">
+            <h2>Total expected consumption (kWh/h)</h2>
+            <p id="total-consumption">0</p>
+            <p>Shall be inferior to 75kWh and superior to 15.5kWh</p>
+            <button onclick="launchOptimization()">Launch optimization</button>
+            <button onclick="startOver()">Start over</button>
+        </section>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
