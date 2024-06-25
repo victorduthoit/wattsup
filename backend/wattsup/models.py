@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, JSON
-from database import Base
+from wattsup.database import Base
 
 class Appliance(Base):
     __tablename__ = "appliances"

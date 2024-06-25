@@ -1,0 +1,9 @@
+id,name,category,power,duration,consumption
+1,Fridge,F,2000.0,,
+2,Freezer,F,2500.0,,
+3,Washing machine,A,1500.0,,
+4,Dishwasher,A,2500.0,,
+5,Induction stove,A,3000.0,,
+6,TV,L,500.0,,
+7,Small light,L,100.0,,
+8,Big light,L,800.0,,

@@ -1,11 +1,25 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-import models
-import schemas
 from sqlalchemy import func
+import pandas as pd
+
+from wattsup import models
+from wattsup import schemas
+from wattsup.optimiser import Optimiser
+from wattsup.database import get_engine
 
 
 def create_appliance(db: Session, appliance: schemas.ApplianceCreate):
+    """
+    Create an appliance record and add it the databse
+
+    Args:
+        db (Session): database to add the appliance
+        appliance (schemas.ApplianceCreate): appliance to add
+
+    Returns:
+        schemas.ApplianceCreateResponse: appliance and minimum total energy
+    """
     db_appliance = models.Appliance(
         name=appliance.name,
         category=appliance.category,
@@ -15,7 +29,9 @@ def create_appliance(db: Session, appliance: schemas.ApplianceCreate):
     db.commit()
     db.refresh(db_appliance)
     # add power to category
-    add_category_power(db=db, category_id=appliance.category, net_power=appliance.power)
+    add_category_power(db=db, 
+                       category_id=appliance.category, 
+                       net_power=appliance.power)
     # determine new minimum energy consumption
     minimum_energy_consumption = get_minimum_energy_consumption(db=db)
     response = {
@@ -109,4 +125,12 @@ def get_minimum_energy_consumption(db: Session) -> float:
     return minimum_energy
     
 def get_optimized_consumption(db: Session, total_expected_consumption: float):
-    pass
+    
+    engine = get_engine()
+    appliance_df = pd.read_sql('SELECT * FROM appliances', engine)
+    category_df = pd.read_sql('SELECT * FROM categories', engine)
+
+    determined_appliance_df = Optimiser.compute_optimal_consumption(appliance_df=appliance_df, 
+                                                                      category_df=category_df,
+                                                                      total_expected_consumption=total_expected_consumption)
+    

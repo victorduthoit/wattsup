@@ -1,0 +1,9 @@
+name,category,power
+"Fridge",F,2000.
+"Freezer",F, 2500.
+"Washing machine",A,1500.
+"Dishwasher",A,2500.
+"Induction stove",A,3000.
+"TV",L,500.
+"Small light",L,100.
+"Big light",L,800.

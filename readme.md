@@ -47,7 +47,7 @@ Example of data:
     - [ ] to compute optimisation
     - [ ] to plot
   - [ ] front structure
-  - [ ] front dynamic
+  - [ ] front de
   - [ ] front css
 
 - [ ] containerize

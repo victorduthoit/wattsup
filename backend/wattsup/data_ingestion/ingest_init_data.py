@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
-import models
+import pandas as pd
+from wattsup import models
+
 
 def initialize_category_data(db: Session):
     # Check if the table is empty
@@ -10,3 +12,4 @@ def initialize_category_data(db: Session):
             models.Category(id="L", possible_duration=list(range(4, 25)), minimum_duration=6, power_appliances=0),
         ])
         db.commit() 
+
