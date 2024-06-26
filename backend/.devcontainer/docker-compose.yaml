@@ -10,9 +10,10 @@ services:
     hostname: "wattsup-cont"
     command: "sleep infinity"
     environment:
-      - "PYTHONPATH=/code/"
+      - "PYTHONPATH=/opt/code/backend"
     volumes:
-      - "..:/opt/code"
+      - "../..:/opt/code"
       - "../../data:/mnt/data"
+      - "../../test_data:/mnt/test_data"
     ports:
       - "8000:8080"

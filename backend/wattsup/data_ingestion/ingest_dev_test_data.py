@@ -3,7 +3,7 @@ import pandas as pd
 
 from wattsup import models, crud, schemas
 
-TEST_DATA_APPLIANCES_V1 = "../../test_data/appliances_1.csv"
+TEST_DATA_APPLIANCES_V1 = "/mnt/test_data/appliances_1.csv"
 SCHEMA_CSV = {
     "name": str,
     "category": str,
