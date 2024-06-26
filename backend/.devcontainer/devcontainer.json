@@ -1,9 +1,9 @@
 {
     "name": "WattsUp",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
-    },
+    "service": "wattsup",
+    "dockerComposeFile": "docker-compose.yaml",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/opt/code",
     "customizations": {
         "vscode": {
             "extensions": [

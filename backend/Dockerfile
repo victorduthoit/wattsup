@@ -1,17 +1,22 @@
 # 
-FROM python:3.11 AS wattsup-base
+FROM python:3.11 AS base
 
-WORKDIR /code
-
+WORKDIR /opt/code
 COPY ./requirements.txt /code/requirements.txt
-
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-FROM wattsup-base AS wattsup-dev
+RUN apt update -y
+#RUN apt install sudo vim nano htop
+CMD ["bash"]
 
+FROM base AS dev
 
-FROM wattsup-base AS wattsup-prod
+#RUN apt install git
+CMD ["sleep", "infinity"]
 
-COPY ./wattsup /code/wattsup
+FROM base AS prod
+
+COPY ./wattsup /optcode/wattsup
+
 
 CMD ["fastapi", "run", "app/main.py", "--port", "80"]
