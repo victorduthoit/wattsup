@@ -130,7 +130,16 @@ def get_optimized_consumption(db: Session, total_expected_consumption: float):
     appliance_df = pd.read_sql('SELECT * FROM appliances', engine)
     category_df = pd.read_sql('SELECT * FROM categories', engine)
 
-    determined_appliance_df = Optimiser.compute_optimal_consumption(appliance_df=appliance_df, 
-                                                                      category_df=category_df,
-                                                                      total_expected_consumption=total_expected_consumption)
+    new_appliance_df, total_abs_consumption = Optimiser.compute_optimal_consumption(
+        app_df=appliance_df, 
+        cat_df=category_df,
+        total_expected_consumption=total_expected_consumption)
+    total_rel_consumption = total_abs_consumption / total_expected_consumption
+
+    response = {
+        "appliances": new_appliance_df.to_dict(orient="records"),
+        "total_energy_abs": total_abs_consumption,
+        "total_energy_rel": total_rel_consumption,
+    }
+    return response
     

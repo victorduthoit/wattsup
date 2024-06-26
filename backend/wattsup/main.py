@@ -61,4 +61,4 @@ def compute_energy_consumption(total_expected_consumption: float, db: Session = 
     return crud.get_optimized_consumption(db=db, total_expected_consumption=total_expected_consumption)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
