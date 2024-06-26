@@ -5,14 +5,15 @@ body {
     margin: 0;
     padding: 0;
     background: #f7f7f7;
+    color: #fff;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #012160ff;
+    border-radius: 10px;
 }
 
 header {
@@ -20,61 +21,138 @@ header {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
 }
 
 header h1 {
     margin: 0;
+    font-size: 2em;
+}
+
+header h1 .highlight {
+    color: #26d9c7ff;
 }
 
 header input {
     padding: 5px;
     font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    color: #000;
 }
 
-.input-section, .output-section {
+.main-content {
+    display: flex;
     margin-top: 20px;
 }
 
-h2 {
+.sidebar {
+    width: 40%;
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
     margin-top: 0;
+    font-size: 1.5em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
 }
 
 .appliance-form {
     display: flex;
     gap: 10px;
+    margin-top: 10px;
 }
 
-.appliance-form select, .appliance-form input {
+.appliance-form input,
+.appliance-form select {
     padding: 5px;
     font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .appliance-form button {
     padding: 5px 10px;
     font-size: 1em;
+    background: #26d9c7ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.appliance-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-.appliance-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.output-section p {
-    margin: 5px 0;
-}
-
-button {
+.total-consumption {
+    margin-top: 20px;
+    background: #f7f7f7;
     padding: 10px;
+    border-radius: 10px;
+}
+
+.total-consumption h3 {
+    margin: 0;
+}
+
+.total-consumption p {
+    margin: 5px 0;
+    color: #000;
+}
+
+.content {
+    width: 60%;
+    padding: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
     font-size: 1em;
-    cursor: pointer;
     margin-right: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-optimise {
+    background: #26d9c7ff;
+}
+
+.btn-reset {
+    background: #fff;
+    color: #012160ff;
+}
+
+.charts {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 20px;
+}
+
+.chart {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.chart h3 {
+    margin-top: 0;
+    color: #012160ff;
+}
+
+.invalid {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+    /* Light red background for better visibility */
 }

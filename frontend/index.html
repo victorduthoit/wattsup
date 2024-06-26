@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WattsUp - Energy Consumption</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>WattsUp</h1>
-            <input type="email" id="email" placeholder="Email">
+            <h1>Watts<span class="highlight">Up</span></h1>
         </header>
-
-        <section class="input-section">
-            <h2>Appliances</h2>
-            <div class="appliance-form">
-                <select id="appliance-category">
-                    <option value="fridge">Fridge</option>
-                    <option value="freezer">Freezer</option>
-                    <option value="tv">TV</option>
-                    <!-- Add more appliances as needed -->
-                </select>
-                <input type="number" id="appliance-capacity" placeholder="Capacity (W)">
-                <button onclick="addAppliance()">Add</button>
+        <section class="main-content">
+            <div class="sidebar">
+                <h2>Profile</h2>
+                <input type="email" id="email" placeholder="Email">
+                <br>
+                <br>
+                <h2>Appliances</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Appliance</th>
+                            <th>Category</th>
+                            <th>Capacity (W)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appliance-table">
+                        <!-- Appliances will be added here -->
+                    </tbody>
+                </table>
+                <div class="appliance-form">
+                    <input type="text" id="appliance-name" placeholder="Name">
+                    <select id="appliance-category">
+                        <option value="A">A</option>
+                        <option value="F">F</option>
+                        <option value="L">L</option>
+                        <!-- Add more categories as needed -->
+                    </select>
+                    <input type="number" id="appliance-capacity" placeholder="Capacity (W)">
+                    <button onclick="addAppliance()">+</button>
+                </div>
+                <br>
+                <h2>Total expected consumption</h2>
+                <p id="total-consumption"><input type="number" class="input-validate" id="total-consumption-val"
+                        placeholder="Wh/day" data-max="75000" oninput="validateTotalConsumption(this)"></p>
+                <p class="notice">Shall be inferior to 75kWh and superior to 15.5kWh*</p>
             </div>
 
-            <div class="appliance-list">
-                <h3>Current Appliances</h3>
-                <ul id="appliance-list"></ul>
-            </div>
-        </section>
+            <div class="content">
+                <button class="btn btn-optimise" onclick="launchOptimization()">Launch optimisation</button>
+                <button class="btn btn-reset" onclick="startOver()">Start over</button>
 
-        <section class="output-section">
-            <h2>Total expected consumption (kWh/h)</h2>
-            <p id="total-consumption">0</p>
-            <p>Shall be inferior to 75kWh and superior to 15.5kWh</p>
-            <button onclick="launchOptimization()">Launch optimization</button>
-            <button onclick="startOver()">Start over</button>
+                <div class="charts">
+                    <div class="chart energy-consumption">
+                        <h3>Energy consumption</h3>
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                    <div class="chart operating-time">
+                        <h3>Operating time</h3>
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="scripts.js"></script>
 </body>
+
 </html>
