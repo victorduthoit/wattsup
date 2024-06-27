@@ -32,12 +32,7 @@ def create_appliance(db: Session, appliance: schemas.ApplianceCreate):
     add_category_power(db=db, 
                        category_id=appliance.category, 
                        net_power=appliance.power)
-    # determine new minimum energy consumption
-    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
-    response = {
-        "minimum_total_energy": minimum_energy_consumption,
-        "appliance": db_appliance,
-    }
+    response = db_appliance
     return response
 
 def get_appliance(db: Session, appliance_id: int):
@@ -65,15 +60,7 @@ def update_appliance(db: Session, appliance_id: int, appliance: schemas.Applianc
     # add new power to new category 
     add_category_power(db=db, category_id=appliance.category, net_power=appliance.power)
 
-    # determine new minimum energy consumption
-    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
-
-    # prepare response
-    response = {
-        "minimum_total_energy": minimum_energy_consumption,
-        "appliance": db_appliance,
-    }
-    return response
+    return db_appliance
 
 def get_appliances(db: Session):
     db_appliances = db.query(models.Appliance).all()
@@ -92,15 +79,6 @@ def delete_appliance(db: Session, appliance_id:int):
 
     # remove previous power from previous category
     add_category_power(db=db, category_id=prev_category, net_power=-prev_power)
-
-    # determine new minimum energy consumption
-    minimum_energy_consumption = get_minimum_energy_consumption(db=db)
-
-    # prepare response
-    response = {
-        "minimum_total_energy": minimum_energy_consumption,
-    }
-    return response
 
 def get_category(db: Session, category_id: int):
     db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
@@ -121,7 +99,15 @@ def add_category_power(db: Session, category_id: int, net_power: float):
     db.refresh(db_category)
 
 def get_minimum_energy_consumption(db: Session) -> float:
-    minimum_energy = db.query(func.sum(models.Category.power_appliances * models.Category.minimum_duration)).scalar()
+
+    engine = get_engine()
+    appliance_df = pd.read_sql('SELECT * FROM appliances', engine)
+    category_df = pd.read_sql('SELECT * FROM categories', engine)
+
+    minimum_energy = Optimiser.get_min_energy(
+        app_df=appliance_df, 
+        cat_df=category_df,)
+    print(minimum_energy)
     return minimum_energy
     
 def get_optimized_consumption(db: Session, total_expected_consumption: float):

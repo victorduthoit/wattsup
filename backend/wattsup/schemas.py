@@ -21,17 +21,10 @@ class Appliance(ApplianceBase):
     id: int
     duration: float | None
     consumption: float | None
-
-class MinEnergyConsumption(BaseModel):
-    minimum_total_energy: float
-
-class ApplianceCreateResponse(MinEnergyConsumption):
+class ApplianceCreateResponse(Appliance):
     appliance: Appliance
 
 class ApplianceUpdateResponse(ApplianceCreateResponse):
-    pass
-
-class ApplianceDeleteResponse(MinEnergyConsumption):
     pass
 
 class OptimizedEnergyConsumption(BaseModel):

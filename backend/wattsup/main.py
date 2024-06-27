@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import uvicorn
 
@@ -9,6 +10,17 @@ from wattsup.data_ingestion import ingest_init_data, ingest_dev_test_data
 ENV = "dev"
 
 app = FastAPI()
+
+origins = ["*"]
+
+# allow call from any origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -37,11 +49,15 @@ def read_appliance(appliance_id: int, db: Session = Depends(get_db)):
 def read_appliances(db: Session = Depends(get_db)):
     return crud.get_appliances(db=db)
 
+@app.get("/min/energy", response_model=float)
+def read_min_energy(db: Session = Depends(get_db)):
+    return crud.get_minimum_energy_consumption(db=db)
+
 @app.put("/appliances/{appliance_id}", response_model=schemas.ApplianceCreateResponse)
 def update_appliance(appliance_id: int, appliance: schemas.ApplianceCreate, db: Session = Depends(get_db)):
     return crud.update_appliance(db=db, appliance_id=appliance_id, appliance=appliance)
 
-@app.delete("/appliances/{appliance_id}", response_model=schemas.ApplianceDeleteResponse)
+@app.delete("/appliances/{appliance_id}")
 def delete_appliance(appliance_id: int, db: Session = Depends(get_db)):
     return crud.delete_appliance(db=db, appliance_id=appliance_id)
 

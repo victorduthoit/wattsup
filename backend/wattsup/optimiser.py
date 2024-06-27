@@ -7,6 +7,30 @@ class Optimiser:
     CATEGORIES = ["A", "F", "L"]
 
     @staticmethod
+    def get_min_energy(
+            app_df: pd.DataFrame,
+            cat_df: pd.DataFrame, ):
+        """
+        Determine the minimum energy to be consumed
+
+        Args:
+            app_df (pd.DataFrame): dataframe of appliances (colums "category", "power", "name")
+            app_df (pd.DataFrame): dataframe of categories with at least column "id", "possible_durations", "power"
+
+        Returns:
+            float: minimum energy to consume
+        """
+        # unserialized possible_duration #TODO: pass to specific data management
+        cat_df = Optimiser.unserialize_list_column(cat_df, "possible_duration")
+        # get power and napps for each category
+        cat_power_napp_df = Optimiser.get_category_power_num_app(app_df)
+        # get all the combinations of duration and their energy consumption
+        duration_combinations_df = Optimiser.compute_duration_combination_energy(cat_df, cat_power_napp_df)
+        min_energy = duration_combinations_df["energy"].min()
+        return min_energy
+        
+
+    @staticmethod
     def compute_optimal_consumption(
             app_df: pd.DataFrame,
             cat_df: pd.DataFrame,
@@ -27,17 +51,10 @@ class Optimiser:
         cat_df = Optimiser.unserialize_list_column(cat_df, "possible_duration")
         # get power and napps for each category
         cat_power_napp_df = Optimiser.get_category_power_num_app(app_df)
-        # get all the possible combinations of duration
-        duration_combinations_df = Optimiser.get_duration_combinations(cat_df)
-        # extract power values (vector (3, 1)) and possible duration (matrix (n, 3)) 
-        power = cat_power_napp_df.loc[Optimiser.CATEGORIES, "power"].values
-        duration = duration_combinations_df[Optimiser.CATEGORIES].values
-        # compute energy for each duration combination (sum product = matmul)à
-        energy = duration @ power
-        duration_combinations_df["energy"] = energy
-
+        # get all the combinations of duration and their energy consumption
+        duration_combinations_df = Optimiser.compute_duration_combination_energy(cat_df, cat_power_napp_df)
         # determine duration combination with highest energy which is bellow expected
-        bellow_expected_consumption_filter = energy<=total_expected_consumption
+        bellow_expected_consumption_filter = duration_combinations_df["energy"]<=total_expected_consumption
         optim_idx = duration_combinations_df[bellow_expected_consumption_filter]["energy"].idxmax()
         optim_combination = duration_combinations_df.loc[optim_idx]
         optim_energy = optim_combination["energy"]
@@ -58,11 +75,23 @@ class Optimiser:
         
         # update appliance dataframe with value of time that it should 
         # be on and corresponding energy consumed
-        app_df["time"] = app_df["category"].map(cat_to_appliance_duration)
-        app_df["consumption"] = app_df["power"] * app_df["time"]
+        app_df["duration"] = app_df["category"].map(cat_to_appliance_duration)
+        app_df["consumption"] = app_df["power"] * app_df["duration"]
 
         return app_df, optim_energy
     
+    @staticmethod
+    def compute_duration_combination_energy(cat_df, cat_power_napp_df):
+        # get all the possible combinations of duration
+        duration_combinations_df = Optimiser.get_duration_combinations(cat_df)
+        # extract power values (vector (3, 1)) and possible duration (matrix (n, 3)) 
+        power = cat_power_napp_df.loc[Optimiser.CATEGORIES, "power"].values
+        duration = duration_combinations_df[Optimiser.CATEGORIES].values
+        # compute energy for each duration combination (sum product = matmul)à
+        energy = duration @ power
+        duration_combinations_df["energy"] = energy
+        return duration_combinations_df
+
     @staticmethod
     def unserialize_list_column(df: pd.DataFrame, col: str) -> pd.DataFrame:
         """
@@ -97,6 +126,11 @@ class Optimiser:
             .set_index("category")
             .rename(columns={"name": "num_app"})
         )
+
+        # make sure all categories appear
+        for cat in Optimiser.CATEGORIES:
+            if cat not in df.index:
+                df = pd.concat([df, pd.DataFrame({"power": [0], "num_app": [0]}, index=[cat])])
         return df
 
     @staticmethod
