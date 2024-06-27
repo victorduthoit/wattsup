@@ -11,7 +11,8 @@
                 "ms-python.vscode-pylance",
                 "vivaxy.vscode-conventional-commits",
                 "mhutchie.git-graph",
-                "eamodio.gitlens"
+                "eamodio.gitlens",
+                "ritwickdey.liveserver"
             ],
             "settings": {
                 "python.testing.pytestArgs": [

@@ -6,15 +6,12 @@
     "configurations": [
 
         {
-            "name": "Python Debugger: Current File",
+            "name": "WattsUp Backend Server",
             "type": "debugpy",
             "request": "launch",
-            "program": "wattsup/main.py",
+            "program": "/opt/code/backend/wattsup/main.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/backend/",
-            "env": {
-                "PYTHONPATH": "/Users/victorduthoit/Documents/4. dev/workspace/wattsup/backend/"
-            }
         }
     ]
 }
