@@ -40,20 +40,27 @@
                         <option value="L">L</option>
                         <!-- Add more categories as needed -->
                     </select>
-                    <input type="number" id="appliance-capacity" placeholder="Capacity (W)">
-                    <button onclick="addAppliance()">+</button>
+                    <input type="number" id="appliance-capacity" placeholder="Capacity (W)" width="10%">
+                    <button onclick=" addAppliance()">+</button>
                 </div>
                 <br>
                 <h2>Total expected consumption</h2>
-                <p id="total-consumption"><input type="number" class="input-validate" id="total-consumption-val"
-                        placeholder="Wh/day" data-max="75000" oninput="validateTotalConsumption(this)"></p>
-                <p class="notice">Shall be inferior to 75kWh and superior to 15.5kWh*</p>
+                <p id="total-consumption-val"><input type="number" class="input-validate" id="total-consumption"
+                        placeholder="Wh/day" data-min="0" data-max="75000" oninput="validateTotalConsumption(this)"></p>
+                <p id="total-consumption-warning" class="notice">Shall be inferior to 75kWh</p>
             </div>
 
             <div class="content">
-                <button class="btn btn-optimise" onclick="launchOptimization()">Launch optimisation</button>
+                <button class="btn btn-optimise" onclick="computeOpimal()">Launch optimisation</button>
                 <button class="btn btn-reset" onclick="startOver()">Start over</button>
+                <button class="btn btn-reset" onclick="render()">Update</button>
 
+                <div class="resume-energy-consumption">
+                    <div>
+                        <h3>Total energy consumption</h3>
+                        <p id="total-consumption-results" class="total-consumption-results"></p>
+                    </div>
+                </div>
                 <div class="charts">
                     <div class="chart energy-consumption">
                         <h3>Energy consumption</h3>
@@ -68,7 +75,7 @@
         </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="scripts.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

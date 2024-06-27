@@ -86,6 +86,10 @@ table td {
     border-radius: 5px;
 }
 
+.appliance-form input {
+    width: 80%;
+}
+
 .appliance-form button {
     padding: 5px 10px;
     font-size: 1em;
@@ -132,6 +136,27 @@ table td {
 
 .btn-reset {
     background: #fff;
+    color: #012160ff;
+}
+
+.resume-energy-consumption {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 20px;
+}
+
+.resume-energy-consumption div {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.resume-energy-consumption.resume-energy-consumption h3 {
+    margin-top: 0px;
+    color: #012160ff;
+}
+
+.total-consumption-results {
     color: #012160ff;
 }
 
