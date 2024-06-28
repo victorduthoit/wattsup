@@ -53,12 +53,10 @@ Endpoints to handle CRUD operations on resources and computations:
 - 201 created:
 ```
 {
-    "appliance": {
-        "name": "freezer",
-        "power": "2500",
-        "usagePattern": "F"
-    }
-    "minimum_total_consumption": 7500
+    "id": 1,
+    "name": "freezer",
+    "power": "2500",
+    "usagePattern": "F"
 }
 ```
 - 422 unprocessable entity
@@ -97,12 +95,10 @@ Endpoints to handle CRUD operations on resources and computations:
 **Request Body**:
 ```
 {
-    "appliance": {
-        "name": "freezer",
-        "power": "3000",
-        "usagePattern": "F"
-    }
-    "minimum_total_consumption": 9000
+    "id": 1,
+    "name": "freezer",
+    "power": "2500",
+    "usagePattern": "F"
 }
 ```
 **Response**: Similar to Create Appliance.
@@ -112,11 +108,7 @@ Endpoints to handle CRUD operations on resources and computations:
 **Endpoint**: `DELETE /appliances/{id}`
 **Description**: Deletes an appliance by ID.
 **Response**: 204 No Content
-```
-{
-    "minimum_total_consumption": 4000
-}
-```
+
 ####  1.5. <a name='ListAppliances'></a>List Appliances
 
 **Endpoint**: `GET /appliances`
@@ -153,7 +145,17 @@ Endpoints to handle CRUD operations on resources and computations:
 ```
 {
     "appliances" : [...] // similar to list appliances
-    "total_optimized_consumption_abs": 34.5  // in kilowatt-hours (kWh)
-    "total_optimized_consumption_rel": 0.9623 // in percent relative to the expected total consumption
+    "total_energy_abs": 34.5  // in kilowatt-hours (kWh)
+    "total_energy_rel": 0.9623 // in percent relative to the expected total consumption
 }
+```
+
+
+####  2.1. <a name='GetMinEnergy'></a>Get Optimized Consumption
+
+**Endpoint**: `GET /min/energy`
+**Description**: Calculates the optimized consumption for the household.
+**Response**:
+```
+30123
 ```
