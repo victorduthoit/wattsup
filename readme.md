@@ -2,6 +2,7 @@
 
 ## Content
 Small applications to get to know the consumption of appliances of an household.
+Appliances are divided into categories which have specificities (total operating time). The application aims at determining the consumption of appliances so the total energy is close as possible to the total expected energy defined by the user.
 
 ## Roadmap
 
