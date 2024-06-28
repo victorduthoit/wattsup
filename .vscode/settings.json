@@ -3,5 +3,6 @@
         "specifications",
         "readme",
         "backend"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
